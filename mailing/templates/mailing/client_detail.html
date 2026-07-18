@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+Клиент
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1>{{ client.full_name }}</h1>
+
+    <p>
+        <strong>Email:</strong>
+        {{ client.email }}
+    </p>
+
+    <p>
+        <strong>Комментарий:</strong>
+        {{ client.comment|default:"Комментарий отсутствует" }}
+    </p>
+
+    <a
+        href="{% url 'mailing:client_list' %}"
+        class="btn btn-secondary"
+    >
+        Назад к списку
+    </a>
+</div>
+{% endblock %}

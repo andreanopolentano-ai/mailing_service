@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Пользователи сервиса</h1>
+
+<table class="table table-striped">
+    <tr>
+        <th>Email</th>
+        <th>Активен</th>
+        <th>Email подтвержден</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for service_user in users %}
+        <tr>
+            <td>{{ service_user.email }}</td>
+            <td>{{ service_user.is_active }}</td>
+            <td>{{ service_user.is_email_confirmed }}</td>
+            <td>
+                {% if service_user.is_active and service_user != request.user %}
+                    <form method="post" action="{% url 'users:user_block' service_user.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Заблокировать</button>
+                    </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

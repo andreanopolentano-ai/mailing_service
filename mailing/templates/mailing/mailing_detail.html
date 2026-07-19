@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Рассылка{% endblock %}
+
+{% block content %}
+<h1>Рассылка #{{ mailing.pk }}</h1>
+
+<p><strong>Старт:</strong> {{ mailing.start_time }}</p>
+<p><strong>Окончание:</strong> {{ mailing.end_time }}</p>
+<p><strong>Статус:</strong> {{ mailing.get_status_display }}</p>
+<p><strong>Активна:</strong> {{ mailing.is_active }}</p>
+<p><strong>Сообщение:</strong> {{ mailing.message.subject }}</p>
+<p><strong>Владелец:</strong> {{ mailing.owner.email }}</p>
+
+<h3>Получатели</h3>
+<ul>
+    {% for recipient in mailing.recipients.all %}
+        <li>{{ recipient.full_name }} — {{ recipient.email }}</li>
+    {% endfor %}
+</ul>
+
+<div class="d-flex gap-2">
+    <a href="{% url 'mailing:mailing_list' %}" class="btn btn-secondary">Назад</a>
+
+    {% if mailing.owner == request.user %}
+        <form method="post" action="{% url 'mailing:mailing_send' mailing.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Запустить рассылку</button>
+        </form>
+
+        <a href="{% url 'mailing:mailing_update' mailing.pk %}" class="btn btn-warning">Изменить</a>
+        <a href="{% url 'mailing:mailing_delete' mailing.pk %}" class="btn btn-danger">Удалить</a>
+    {% endif %}
+
+    {% if perms.mailing.can_disable_mailing and mailing.is_active %}
+        <form method="post" action="{% url 'mailing:mailing_disable' mailing.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">Отключить рассылку</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

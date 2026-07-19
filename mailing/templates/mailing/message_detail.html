@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Сообщение{% endblock %}
+
+{% block content %}
+<h1>{{ message_object.subject }}</h1>
+
+<p>{{ message_object.body }}</p>
+
+<a href="{% url 'mailing:message_list' %}" class="btn btn-secondary">Назад</a>
+{% endblock %}

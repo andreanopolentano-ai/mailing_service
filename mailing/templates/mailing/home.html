@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Главная страница</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h4>Всего рассылок</h4>
+            <p class="display-6">{{ total_mailings }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h4>Активных рассылок</h4>
+            <p class="display-6">{{ active_mailings }}</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm">
+            <h4>Уникальных клиентов</h4>
+            <p class="display-6">{{ unique_clients }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

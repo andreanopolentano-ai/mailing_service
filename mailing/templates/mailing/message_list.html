@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Сообщения{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Сообщения</h1>
+
+<a href="{% url 'mailing:message_create' %}" class="btn btn-primary mb-3">Добавить сообщение</a>
+
+<table class="table table-striped">
+    <tr>
+        <th>Тема</th>
+        <th>Действия</th>
+    </tr>
+
+    {% for message in messages_list %}
+        <tr>
+            <td>{{ message.subject }}</td>
+            <td>
+                <a href="{% url 'mailing:message_detail' message.pk %}" class="btn btn-sm btn-info">Открыть</a>
+                <a href="{% url 'mailing:message_update' message.pk %}" class="btn btn-sm btn-warning">Изменить</a>
+                <a href="{% url 'mailing:message_delete' message.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
